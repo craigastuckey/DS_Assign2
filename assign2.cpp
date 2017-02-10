@@ -13,8 +13,12 @@
 //******************************************************************************
 
 #include <iostream>
+#include <ctime>
 #include <iomanip>
 #include <vector>
+
+void PopulateMatrix(int);   //  Will populate a 2D vector array 
+                            //  of size NxN
 
 using namespace std;
 
@@ -66,6 +70,8 @@ int main()
         }
         while(!verify);
 
+        PopulateMatrix(dimension);
+
         verify = false;   // Returning verify to false for later use
 
         do    // Verifying if user input is valid
@@ -93,3 +99,72 @@ int main()
     return 0;
 }
 
+//*****************************************************************************
+//  PopulateMatrix(int n) : This function takes the dimensions given by the user
+//                        and creates a 2D vector array matrix
+//
+//  n : user given dimensions for matrix
+//*****************************************************************************
+
+void PopulateMatrix(int n) 
+{
+    vector< vector<int> > matrix (n, vector<int> (n, 0)); // Creating matrix
+    vector<int> sumRows (n, 0);
+    vector<int> sumColumns (n, 0);
+    int sumDiagOne = 0;
+    int sumDiagTwo = 0;
+    int randNum;
+    bool distinct;
+
+    srand(time(NULL));
+
+    for(int i=0; i<n; i++)
+    {
+        for(int j=0; j<n; j++)
+        {
+            do
+            {
+                distinct = true;
+                randNum = rand() % ((n * n) + 1);
+                for(int k=0; k<n; k++)
+                {
+                    for(int l=0; l<n; l++)
+                    {
+                        if(matrix[l][k] == randNum)
+                        {
+                            distinct = false;
+                            break;
+                        }
+                    }
+                    if(!distinct)
+                        break;
+                }
+            } 
+            while(!distinct);
+            matrix[j][i] = randNum;
+            sumColumns[j] += randNum;
+            sumRows[i] += randNum;
+            if(i == j)
+                sumDiagOne += matrix[j][i];
+            if(i+j == (n-1))
+                sumDiagTwo += matrix[j][i];
+            cout << setw(4) << right << matrix[j][i] << "     ";
+        }
+        cout << endl;
+    }
+
+    cout << endl;
+
+    for(int i=0; i<n; i++)
+        cout << "Column " << i+1 << ": " << sumColumns[i] << endl;
+    
+    cout << endl;
+
+    for(int i=0; i<n; i++)
+        cout << "Row " << i+1 << ": " << sumRows[i] << endl;
+
+    cout << "\nDiagonal one: " << sumDiagOne << endl;
+    cout << "Diagonal two: " << sumDiagTwo << endl;
+
+
+}
