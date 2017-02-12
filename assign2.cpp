@@ -47,7 +47,7 @@ int main()
     cout << "Populate the 2 D vector array with distinct random numbers.";
     cout << endl << setw(6) << right << "4. ";
     cout << "Display the sum of each row, column, and diagonal then ";
-    cout << "determine whether" << endl << "      the numbers in N x N";
+    cout << "determine whether" << endl << "      the numbers in N x N ";
     cout << "vector array are perfect matrix numbers." << endl << endl << endl;
 
     do  // User interface
