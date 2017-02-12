@@ -108,25 +108,25 @@ int main()
 void PopulateMatrix(int n) 
 {
     vector< vector<int> > matrix (n, vector<int> (n, 0)); // Creating matrix
-    int sumRow = 0;
-    int sumColumn = 0;
-    int sumDiagOne = 0;
-    int sumDiagTwo = 0;
-    int totalSum = 0;
-    int randNum;
-    bool distinct;
-    bool perfect = false;
+    int sumRow = 0;       //  Stores the sum of a row in the matrix
+    int sumColumn = 0;    //  Stores the sum of a column in the matri
+    int sumDiagOne = 0;   //  Stores the sum of the first diagonal in the matrix
+    int sumDiagTwo = 0;   //  Stores the sum of the 2nd diagonal in the matrix
+    int totalSum = 0;     //  Stores the sum of all numbers in the matrix
+    int randNum;          //  Stores a randomly genterated integer
+    bool distinct;        //  Used to determine if ranNum is distinct
+    bool perfect = false; //  Used to determine if the matris is perfect
 
-    srand(time(NULL));
+    srand(time(NULL));    //  Initializing pseudo-random number generator
 
     cout << "The perfect matrix that is created for size " << n << " :\n\n";
 
-    for(int i=0; i<n; i++)
-    {
-        for(int j=0; j<n; j++)
-        {
-            do
-            {
+    for(int i=0; i<n; i++)      //  This block of loops populates the matrix of
+    {                           //  size NxN with distinct random numbers and 
+        for(int j=0; j<n; j++)  //  displays it. It also takes the sum of the 
+        {                       //  numbers in the first and second diagonal as
+            do                  //  well as the total sum of numbers in the 
+            {                   //  matrix.
                 distinct = true;
                 randNum = rand() % (n * n) + 1;
                 for(int k=0; k<n; k++)
@@ -157,8 +157,10 @@ void PopulateMatrix(int n)
 
     cout << endl;
 
+    //  Displaying the matrix perfect number
     cout << "The perfect number is : " << totalSum / 3 << endl << endl;
 
+    //  Displaying the sum of each row in the matrix
     for(int i=0; i<n; i++)
     {
         cout << "Sum of numbers in row\t\t#";
@@ -172,6 +174,7 @@ void PopulateMatrix(int n)
 
     cout << endl;
 
+    //  Displaying the sum of each column in the matrix
     for(int i=0; i<n; i++)
     {
         cout << "Sum of numbers in column\t#";
@@ -183,6 +186,7 @@ void PopulateMatrix(int n)
         sumColumn = 0;
     }
 
+    //  Displaying the sum of both diagonals in the matrix
     cout << "\nSum of numbers in first diagonal\t " << "=";
     cout << setw(6) << right << sumDiagOne << endl;
     cout << "Sum of numbers in second diagonal\t " << "=";
@@ -200,6 +204,7 @@ void PopulateMatrix(int n)
         }
     }
 
+    //  Displaying whether or not the generated matrix is perfect.
     cout << "The above " << (perfect ? "is " : "is not ") << "a perfect matrix";
     cout << endl << endl;
 }
