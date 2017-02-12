@@ -17,8 +17,7 @@
 #include <iomanip>
 #include <vector>
 
-void PopulateMatrix(int);   //  Will populate a 2D vector array 
-                            //  of size NxN
+void PopulateMatrix(int);   
 
 using namespace std;
 
@@ -101,7 +100,7 @@ int main()
 
 //*****************************************************************************
 //  PopulateMatrix(int n) : This function takes the dimensions given by the user
-//                        and creates a 2D vector array matrix
+//                          and creates a 2D vector array matrix
 //
 //  n : user given dimensions for matrix
 //*****************************************************************************
@@ -109,14 +108,18 @@ int main()
 void PopulateMatrix(int n) 
 {
     vector< vector<int> > matrix (n, vector<int> (n, 0)); // Creating matrix
-    vector<int> sumRows (n, 0);
-    vector<int> sumColumns (n, 0);
+    int sumRow = 0;
+    int sumColumn = 0;
     int sumDiagOne = 0;
     int sumDiagTwo = 0;
+    int totalSum = 0;
     int randNum;
     bool distinct;
+    bool perfect = false;
 
     srand(time(NULL));
+
+    cout << "The perfect matrix that is created for size " << n << " :\n\n";
 
     for(int i=0; i<n; i++)
     {
@@ -125,7 +128,7 @@ void PopulateMatrix(int n)
             do
             {
                 distinct = true;
-                randNum = rand() % ((n * n) + 1);
+                randNum = rand() % (n * n) + 1;
                 for(int k=0; k<n; k++)
                 {
                     for(int l=0; l<n; l++)
@@ -141,30 +144,62 @@ void PopulateMatrix(int n)
                 }
             } 
             while(!distinct);
+            totalSum += randNum;
             matrix[j][i] = randNum;
-            sumColumns[j] += randNum;
-            sumRows[i] += randNum;
             if(i == j)
                 sumDiagOne += matrix[j][i];
             if(i+j == (n-1))
                 sumDiagTwo += matrix[j][i];
             cout << setw(4) << right << matrix[j][i] << "     ";
         }
-        cout << endl;
+        cout << endl << endl << endl;
+    }
+
+    cout << endl;
+
+    cout << "The perfect number is : " << totalSum / 3 << endl << endl;
+
+    for(int i=0; i<n; i++)
+    {
+        cout << "Sum of numbers in row\t\t#";
+        cout << setw(3) << right << i+1;
+        cout << setw(6) << right << "=";
+        for(int j=0; j<n; j++)
+            sumRow += matrix[j][i];
+        cout << setw(6) << right << sumRow << endl;
+        sumRow = 0;
     }
 
     cout << endl;
 
     for(int i=0; i<n; i++)
-        cout << "Column " << i+1 << ": " << sumColumns[i] << endl;
-    
-    cout << endl;
+    {
+        cout << "Sum of numbers in column\t#";
+        cout << setw(3) << right << i+1;
+        cout << setw(6) << right << "=";
+        for(int j=0; j<n; j++)
+            sumColumn += matrix[i][j];
+        cout << setw(6) << right << sumColumn << endl;
+        sumColumn = 0;
+    }
 
-    for(int i=0; i<n; i++)
-        cout << "Row " << i+1 << ": " << sumRows[i] << endl;
+    cout << "\nSum of numbers in first diagonal\t " << "=";
+    cout << setw(6) << right << sumDiagOne << endl;
+    cout << "Sum of numbers in second diagonal\t " << "=";
+    cout << setw(6) << right << sumDiagTwo << endl << endl;
 
-    cout << "\nDiagonal one: " << sumDiagOne << endl;
-    cout << "Diagonal two: " << sumDiagTwo << endl;
+    if(sumDiagOne == totalSum / 3)
+    {
+        if(sumDiagTwo == totalSum / 3)
+        {
+            if(sumRow == totalSum / 3)
+            {
+                if(sumColumn == totalSum / 3)
+                    perfect = true;
+            }
+        }
+    }
 
-
+    cout << "The above " << (perfect ? "is " : "is not ") << "a perfect matrix";
+    cout << endl << endl;
 }
